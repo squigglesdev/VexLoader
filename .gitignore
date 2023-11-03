@@ -1,0 +1,22 @@
+#top-level files
+banned-ips.json
+banned-players.json
+eula.txt
+ops.json
+server.properties
+usercache.json
+whitelist.json
+
+#folders
+crash-reports
+libraries
+logs
+versions
+world
+servers
+mods
+.fabric
+
+#other files
+*.pyc
+*.jar
