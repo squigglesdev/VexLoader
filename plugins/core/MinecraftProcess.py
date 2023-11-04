@@ -1,4 +1,3 @@
-import time
 import os
 import json
 import importlib
@@ -29,7 +28,7 @@ class MinecraftProcess:
         self.plugins = []
         for file in os.listdir('plugins'):
             if file.endswith('.py'):
-                self.pluginPaths.append(file[:-3])  # remove .py extension
+                self.pluginPaths.append(file[:-3])
         for i in self.pluginPaths:
             module = importlib.import_module(f'plugins.{i}')
             class_ = getattr(module, i)
@@ -56,7 +55,7 @@ class MinecraftProcess:
             self.current_time = datetime.now().strftime("%H:%M:%S")
             for plugin in self.plugins:
                 plugin.tick(self, tick)
-            time.sleep(self.config['tickrate']/100)
+            time.sleep(1/self.config['tickrate'])
 
 
 
@@ -79,10 +78,10 @@ class MinecraftProcess:
 
 
     def log(self, line):
-        print(f"[{self.current_time}] [WitherLoader/INFO]: {line}")
+        print(f"[{self.current_time}] [VexLoader/INFO]: {line}")
 
     def warn(self, line):
-        print(f"\033[93m[{self.current_time}] [WitherLoader/WARN]: {line}\033[0m")
+        print(f"\033[93m[{self.current_time}] [VexLoader/WARN]: {line}\033[0m")
 
     def error(self, line):
-        print(f"\033[91m[{self.current_time}] [WitherLoader/ERROR]: {line}\033[0m")
+        print(f"\033[91m[{self.current_time}] [VexLoader/ERROR]: {line}\033[0m")
