@@ -43,7 +43,7 @@ class MyPlugin:
 
     def recieveCommand(self, process, line):
         if 'Example' in line:
-            process.log('Example plugin recieved command!')
+            process.log('Example plugin recieved command!', 'ExamplePlugin')
             # Note: it is more efficient to use a regex to search for a string
         else:
             pass
