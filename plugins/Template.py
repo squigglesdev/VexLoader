@@ -2,7 +2,7 @@ class Template:
     def onLoad(self, process):
         process.log('Template plugin loaded!', 'Template')
 
-    def tick(self, process):
+    def tick(self, process, tick):
         process.log('Template plugin ticked!', 'Template')
 
     def recieveCommand(self, process, line):

@@ -17,7 +17,7 @@ class MyPlugin:
     pass
 ```
 
-Each plugin class must have an `onLoad` and `tick` function. These functions take one argument; the minecraft process. The `onLoad` function is called when the plugin is loaded, and the `tick` function is called every tick. 
+Each plugin class must have an `onLoad` and `tick` function. These functions share an argument; the minecraft process. The `tick` function also takes an extra argument; the current tick number. The `onLoad` function is called when the plugin is loaded, and the `tick` function is called every tick. 
 
 (**Note:** Plugin ticks are not the same as game ticks! The plugin tick rate can be configured in the `config.json` file.)
 
@@ -27,7 +27,7 @@ class MyPlugin:
     def onLoad(self, process):
         pass
 
-    def tick(self, process):
+    def tick(self, process, tick):
         pass
 ```
 
