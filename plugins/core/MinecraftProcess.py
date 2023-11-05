@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 import threading
 
+
 if os.name == 'nt':
     import wexpect as pexpect
 elif os.name == 'posix':
@@ -34,8 +35,14 @@ class MinecraftProcess:
             class_ = getattr(module, i)
             self.plugins.append(class_())
 
+    def registerCommand(self, command, plugin):
+        self.commands.append(f"{command}({plugin})")
+        self.log(f'Registered command {command} from plugin {plugin}!', 'Core')
+        return command
+
 
     def onLoad(self):
+        self.commands = []
         self.current_time = datetime.now().strftime("%H:%M:%S")
         self.log('Loading config.json', 'Core')
         self.config = self.getConfig()
@@ -47,34 +54,50 @@ class MinecraftProcess:
         self.getPlugins()
         for plugin in self.plugins:
             plugin.onLoad(self)
-        self.log('Plugins loaded!', 'Core')
+        self.log('Plugins loaded!', 'Core')   
+
 
     def tick(self):
         while True:
             tick = datetime.now()
             self.current_time = datetime.now().strftime("%H:%M:%S")
+            line = self.readLine()
+            print(line, end='')
             for plugin in self.plugins:
                 plugin.tick(self, tick)
-            time.sleep(1/self.config['tickrate'])
-
+            for command in self.commands:
+                plugin_name = command.split('(')[1][:-1]
+                command_name = command.split('(')[0]
+                
+                if command_name in line:
+                    self.log(f"Received command {command_name} from plugin {plugin_name}!", 'Core')
+                    for plugin in self.plugins:
+                        if plugin_name in str(plugin):
+                            pluginCommandThread = threading.Thread(target=plugin.recieveCommand, args=(self, command_name))
+                            pluginCommandThread.start()
+            time.sleep(1 / self.config['tickrate'])
 
 
     def sendCommand(self, line):
         self.minecraft_process.sendline(line)
 
     def readLine(self):
-        line = self.minecraft_process.readline()
+        index = self.minecraft_process.expect(['\r\n', pexpect.EOF, pexpect.TIMEOUT], timeout=0.1)
+        if index == 0:
+            line = self.minecraft_process.before + '\r\n'
+        elif index == 1:
+            self.log('Minecraft process closed!', 'Core')
+            self.minecraft_process.close()
+        elif index == 2:
+            line = ""
+        else:
+            line = self.minecraft_process.before
+
         if "WARN" in line:
             line = f"\033[93m{line}\033[0m"
         elif "ERROR" in line:
             line = f"\033[91m{line}\033[0m"
         return line
-    
-    def recieveCommand(self):
-        while True:
-            line = self.readLine()
-            for plugin in self.plugins:
-                plugin.recieveCommand(self, line)
 
 
     def log(self, line, name):
