@@ -53,5 +53,5 @@ class MyPlugin:
 
 Only Python Standard Library modules are allowed to be imported. You can find a list of all Python Standard Library modules [here][python_modules].
 
-[template]: plugins/Template.py
+[template]: https://gist.github.com/squigglesdev/71dc83559b30bc21f5a703ab27e1cdfb
 [python_modules]: https://docs.python.org/3/library/
