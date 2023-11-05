@@ -1,7 +1,7 @@
 {
     "serverpath": "servers/fabric-server-mc.23w43b-loader.0.14.24-launcher.0.11.2.jar",
 
-    "memory": "5G", // Supports G, M, K eg. 5G, 512M, 1024K
+    "memory": "5G",
     
     "tickrate": 20
 }

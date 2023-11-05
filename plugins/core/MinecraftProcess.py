@@ -39,7 +39,7 @@ class MinecraftProcess:
         self.current_time = datetime.now().strftime("%H:%M:%S")
         self.log('Loading config.json', 'Core')
         self.config = self.getConfig()
-        self.log('Config loaded!')
+        self.log('Config loaded!', 'Core')
         self.log(f'Starting Minecraft process...', 'Core')
         self.minecraft_process = pexpect.spawn(f"java -Xmx{self.config['memory']} -jar {self.config['serverpath']} nogui", encoding='utf-8', timeout=None)
         self.log('Minecraft process loaded!', 'Core')
