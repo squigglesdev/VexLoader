@@ -17,7 +17,7 @@ class MyPlugin:
     pass
 ```
 
-Each plugin class must have an `onLoad` and `tick` function. These functions share an argument; the minecraft process. The `tick` function also takes an extra argument; the current tick number. The `onLoad` function is called when the plugin is loaded, and the `tick` function is called every tick. 
+Each plugin class must have an `onLoad` and `tick` function. The `onLoad` function is called when the plugin is loaded, and the `tick` function is called every tick. 
 
 (**Note:** Plugin ticks are not the same as game ticks! The plugin tick rate can be configured in the `config.json` file.)
 
@@ -31,22 +31,28 @@ class MyPlugin:
         pass
 ```
 
-## Recieving commands
+These functions share an argument; the minecraft process. The `tick` function also takes an extra argument; the current tick number. 
 
-> **This section is subject to change.**
+## Creating commands
 
-To recieve commands, add a `recieveCommand` function to your plugin class. This function takes two arguments; the minecraft process, and the line. The line is the command that was sent to the server.
+To create a command, you need to register it. You can do this in the `onLoad` function:
 
 ```python
 class MyPlugin:
-    # OnLoad and Tick...
+    def onLoad(self, process):
+        self.myExampleCommand = process.registerCommand('examplecommand', 'ExamplePlugin')
+```
+The `MinecraftProcess.registerCommand` function takes two arguments; the command name and the plugin name. The command name is the name that the user will type in chat to execute the command. The plugin name is the name of your plugin. This is used to identify which plugin the command belongs to. The function returns the command name, which you can store in a variable if you want.
 
-    def recieveCommand(self, process, line):
-        if 'Example' in line:
-            process.log('Example plugin recieved command!', 'ExamplePlugin')
-            # Note: it is more efficient to use a regex to search for a string
-        else:
-            pass
+To handle recieving commands, you need to create a function called `recieveCommand`. This function takes two arguments; the minecraft process and the command:
+
+```python
+class MyPlugin:
+    # onLoad and tick...
+
+    def recieveCommand(self, process, command):
+        if command == self.myExampleCommand:
+            process.Log('Recieved command!', 'ExamplePlugin')
 ```
 
 ## Importing modules
