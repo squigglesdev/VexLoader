@@ -1,4 +1,4 @@
-# Getting started with VexLoader
+# Getting started with VexLoader plugin development
 
 VexLoader makes it very easy to write your own Minecraft plugins. This guide will walk you through the process of writing your first plugin.
 
