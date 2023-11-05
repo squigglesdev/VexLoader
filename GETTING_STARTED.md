@@ -33,6 +33,8 @@ class MyPlugin:
 
 ## Recieving commands
 
+> **This section is subject to change.**
+
 To recieve commands, add a `recieveCommand` function to your plugin class. This function takes two arguments; the minecraft process, and the line. The line is the command that was sent to the server.
 
 ```python
@@ -40,8 +42,8 @@ class MyPlugin:
     # OnLoad and Tick...
 
     def recieveCommand(self, process, line):
-        if 'Template' in line:
-            process.log('Template plugin recieved command!')
+        if 'Example' in line:
+            process.log('Example plugin recieved command!')
             # Note: it is more efficient to use a regex to search for a string
         else:
             pass

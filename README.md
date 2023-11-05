@@ -22,7 +22,13 @@ Vexloader is a lightweight beginner-friendly Minecraft plugin loader designed fo
 
 ## Installation
 
-[Python][python_download] is required to run VexLoader. To install VexLoader, clone the repository, add any [Minecraft Server][servers] jar into the `servers` folder, and run `python start.py` in the root directory of the repository.
+[Python][python_download] is required to run VexLoader. The python package `pexpect` (or `wexpect` if you're on Windows) is also required for Vexloader to run. You can install it by entering this command into your terminal once Python is installed:
+    
+```bash
+pip install pexpect
+```
+
+To install VexLoader, clone the repository, add any [Minecraft Server][servers] jar into the `servers` folder, and run `python start.py` in the root directory of the repository.
 
 ## Installing plugins
 
