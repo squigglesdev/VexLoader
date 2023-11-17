@@ -77,8 +77,8 @@ class MyPlugin:
     def recieveCommand(self, process, command):
         if command == self.myExampleCommand:
             players = process.getPlayers()
-            if "squigglesdev" in players:
-                process.executeCommand('say Hello, squigglesdev!', 'ExamplePlugin')
+            for player in players:
+                process.sendCommand(f'say Hi, {player}!')
 ```
 
 ## Importing modules
