@@ -17,7 +17,7 @@ class MyPlugin:
     pass
 ```
 
-Each plugin class must have an `onLoad` and `tick` function. The `onLoad` function is called when the plugin is loaded, and the `tick` function is called every tick. 
+Each plugin class must have an `onLoad` and `tick` method. The `onLoad` method is called when the plugin is loaded, and the `tick` method is called every tick. 
 
 (**Note:** Plugin ticks are not the same as game ticks! The plugin tick rate can be configured in the `config.json` file.)
 
@@ -31,20 +31,20 @@ class MyPlugin:
         pass
 ```
 
-These functions share an argument; the minecraft process. The `tick` function also takes an extra argument; the current tick number. 
+These methods share an argument; the minecraft process. The `tick` method also takes an extra argument; the current tick number. 
 
 ## Creating commands
 
-To create a command, you need to register it. You can do this in the `onLoad` function:
+To create a command, you need to register it. You can do this in the `onLoad` method:
 
 ```python
 class MyPlugin:
     def onLoad(self, process):
         self.myExampleCommand = process.registerCommand('examplecommand', 'ExamplePlugin')
 ```
-The `MinecraftProcess.registerCommand` function takes two arguments; the command name and the plugin name. The command name is the name that the user will type in chat to execute the command. The plugin name is the name of your plugin. This is used to identify which plugin the command belongs to. The function returns the command name, which you can store in a variable if you want.
+The `MinecraftProcess.registerCommand` method takes two arguments; the command name and the plugin name. The command name is the name that the user will type in chat to execute the command. The plugin name is the name of your plugin. This is used to identify which plugin the command belongs to. The method returns the command name, which you can store in a variable if you want.
 
-To handle recieving commands, you need to create a function called `recieveCommand`. This function takes two arguments; the minecraft process and the command:
+To handle recieving commands, you need to create a method called `recieveCommand`. This method takes two arguments; the minecraft process and the command:
 
 ```python
 class MyPlugin:
@@ -53,6 +53,32 @@ class MyPlugin:
     def recieveCommand(self, process, command):
         if command == self.myExampleCommand:
             process.Log('Recieved command!', 'ExamplePlugin')
+```
+
+## Getting online players
+
+To get a list of online players, you can use the `getPlayers` method:
+
+```python
+class MyPlugin:
+    # onLoad and tick...
+
+    def recieveCommand(self, process, command):
+        if command == self.myExampleCommand:
+            players = process.getPlayers()
+            process.Log('There are ' + str(len(players)) + ' players online!', 'ExamplePlugin')
+```
+The `MinecraftProcess.getPlayers` method returns a list of player names. This means that you can excecute commands as specific players:
+
+```python
+class MyPlugin:
+    # onLoad and tick...
+
+    def recieveCommand(self, process, command):
+        if command == self.myExampleCommand:
+            players = process.getPlayers()
+            if "squigglesdev" in players:
+                process.executeCommand('say Hello, squigglesdev!', 'ExamplePlugin')
 ```
 
 ## Importing modules

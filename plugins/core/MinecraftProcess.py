@@ -93,11 +93,26 @@ class MinecraftProcess:
         else:
             line = self.minecraft_process.before
 
-        if "WARN" in line:
-            line = f"\033[93m{line}\033[0m"
-        elif "ERROR" in line:
-            line = f"\033[91m{line}\033[0m"
-        return line
+        try:
+            if "WARN" in line:
+                line = f"\033[93m{line}\033[0m"
+            elif "ERROR" in line:
+                line = f"\033[91m{line}\033[0m"
+            return line
+        except:
+            return
+    
+
+    def getPlayers(self):
+        #try:
+        self.sendCommand('list')
+        time.sleep(0.05)
+        line = self.readLine()
+        players = line.split(': ')[2].strip('\r\n').split(',')
+        return players
+        #except:
+            #self.warn("Could not get player list. There probably aren't any players online!", 'Core')
+            #return []
 
 
     def log(self, line, name):
