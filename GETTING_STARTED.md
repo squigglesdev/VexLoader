@@ -10,7 +10,7 @@ VexLoader plugins are written in Python. To get started, create a new file in th
 
 ## Plugin class
 
-VexLoader plugins are class-based, meaning that you will need to create a class for your plugin. The class name will be the same as the file name. For example, if you want to name your plugin `MyPlugin`, the class name will be `MyPlugin`.
+VexLoader plugins are object-oriented, meaning that you will need to create a class for your plugin. The class name will be the same as the file name. For example, if you want to name your plugin `MyPlugin`, the class name will be `MyPlugin`.
 
 ```python
 class MyPlugin:
